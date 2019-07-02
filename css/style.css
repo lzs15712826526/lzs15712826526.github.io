@@ -1181,11 +1181,11 @@ pre {
 }
 .reward .reward-wrap .reward-box {
   position: absolute;
-  top: -220px;
+  top: -280px;
   left: 50%;
   display: none;
   width: 350px;
-  height: 200px;
+  height: 260px;
   margin-left: -175px;
   padding: 15px;
   border: 1px solid #e6e6e6;
@@ -1196,14 +1196,14 @@ pre {
 }
 .reward .reward-wrap .reward-box span {
   display: inline-block;
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
 }
 .reward .reward-wrap .reward-box span img {
   display: inline-block;
   float: left;
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   margin: 0 auto;
   border: 0;
 }
