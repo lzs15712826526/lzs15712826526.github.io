@@ -1,0 +1,362 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="箱__zsLiu">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://lzs15712826526.github.io">
+    <!--SEO-->
+
+    <meta name="keywords" content="CSS 布局 属性 吸顶 导航栏">
+
+
+    <meta name="description" content="开篇相信各位童鞋都遇到过产品提出的吸顶导航需求吧，简单来说，就是导航栏会随着页面滚动，而当导航栏滚动到页面顶部时则会固定在顶部位置。需求很简单对吧，实现方法也有很多种，而今天给大家看一个很有‘逼...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+
+    <!--Title-->
+
+
+<title>优雅快速的实现吸顶栏导航栏效果 | 箱__zsLiu</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="箱__zsLiu" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header"  style="background-image:url(http://snippet.shenliyang.com/img/banner.jpg)"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='zsLiu'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 一念星辰，一念大海。 </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://lzs15712826526.github.io">箱__zsLiu</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>主页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/前端/"><i class="fa "></i>技术</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/后端/"><i class="fa "></i>随笔</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="优雅快速的实现吸顶栏导航栏效果">
+            
+	            优雅快速的实现吸顶栏导航栏效果
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/技术/">技术</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/CSS-布局-属性-吸顶-导航栏/">CSS 布局 属性 吸顶 导航栏</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/05/08</span>
+        </span>
+        
+    
+</div>
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h2 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a><strong>开篇</strong></h2><p>相信各位童鞋都遇到过产品提出的吸顶导航需求吧，简单来说，就是导航栏会随着页面滚动，而当导航栏滚动到页面顶部时则会固定在顶部位置。需求很简单对吧，实现方法也有很多种，而今天给大家看一个很有‘逼格’且能快速实现的方法。在这之前，我们先来看一下普遍的做法是怎么实现的。</p>
+<h2 id="Old-Method"><a href="#Old-Method" class="headerlink" title="Old Method"></a><strong>Old Method</strong></h2><p>之前我们实现这个需求的方法有fixed、flex布局等，我们先看一下传统的fixed定位实现方法吧。</p>
+<h3 id="Fixed定位实现"><a href="#Fixed定位实现" class="headerlink" title="Fixed定位实现"></a><strong>Fixed定位实现</strong></h3><p>简单来说，就是给需要吸顶的元素添加<code>position: fixed</code>属性，然后给其定位到顶部，具体代码如下：</p>
+<p><strong>HTML:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;wrap&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;fixedTop&quot;&gt;我是吸顶&lt;/div&gt;</span><br><span class="line">  &lt;div class=&quot;content&quot;&gt;我是正文&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>CSS:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">body &#123;</span><br><span class="line">  margin: 0;</span><br><span class="line">  padding: 0;</span><br><span class="line">&#125;</span><br><span class="line">.wrap .fixedTop &#123;</span><br><span class="line">  width: 100%;</span><br><span class="line">  position: fixed;</span><br><span class="line">  top: 0;</span><br><span class="line">  right: 0;</span><br><span class="line">  background: skyblue;</span><br><span class="line">  color: #fff;</span><br><span class="line">  height: 60px;</span><br><span class="line">  line-height: 60px;</span><br><span class="line">  text-align: center;</span><br><span class="line">&#125;</span><br><span class="line">.content &#123;</span><br><span class="line">  width: 100%;</span><br><span class="line">  height: 700px;</span><br><span class="line">  text-align: center;</span><br><span class="line">  background: pink;</span><br><span class="line">  color: #fff;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>页面效果</strong></p>
+<div align="center">
+  <img width="300" height="450" src="/img/fixed_demo.png" alt="fixed实现吸顶导航栏">
+</div>
+
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a><strong>问题</strong></h3><p>相信有的同学已经发现问题了，为啥content元素内的文本不见了呢？？？</p>
+<p>原因是<code>position: fixed</code>属性的元素，会脱离文档流，正常的文档流中没有了定位元素的位置，那么他的兄弟元素，也就是demo中的content元素会向上占据了fixedTop元素的位置，而体现在页面中，就是定位元素，遮盖住了同级的兄弟元素，而遮盖的大小取决于定位元素的大小。</p>
+<p>那么 测试同学肯定会不同意了，我导航栏下一般不是轮播就是正文，你给我挡住了怎么能行呢？ 没问题，一行代码就解决啦！</p>
+<h3 id="优化Fixed定位"><a href="#优化Fixed定位" class="headerlink" title="优化Fixed定位"></a><strong>优化Fixed定位</strong></h3><p>我们的解决思路就是，在被遮挡的元素上，添加 padding-top 属性，其值是定位元素的高度。 <code>padding-top: 60px</code> ，这样就解决问题啦！</p>
+<p><strong>优化效果</strong></p>
+<div align="center">
+  <img width="300" height="450" src="/img/fixed_demo1.png" alt="fixed实现吸顶导航栏">
+</div>
+
+<h3 id="Fiexed定位总结"><a href="#Fiexed定位总结" class="headerlink" title="Fiexed定位总结"></a><strong>Fiexed定位总结</strong></h3><p>通过上面的介绍，可以看出使用fixed定位实现吸顶导航栏，不仅要在定位元素上设置属性，还需要在同级的兄弟元素上添加padding值，防止吸顶元素遮盖到正常的页面元素。虽然实现的效果也很不错，但是还是比较繁琐的。那么有没有更优雅，更简单的方法实现呢？</p>
+<h2 id="New-Method"><a href="#New-Method" class="headerlink" title="New Method"></a><strong>New Method</strong></h2><p>下面 我们来看一个相比fixed定位，更有‘逼格’的实现方案吧。</p>
+<h3 id="Sticky定位实现"><a href="#Sticky定位实现" class="headerlink" title="Sticky定位实现"></a><strong>Sticky定位实现</strong></h3><p><code>position: sticky</code>是css定位新增的属性，也称为粘性定位。</p>
+<p>粘性定位可以被认为是相对定位（relative）和固定定位（fixed）的混合。元素在跨越特定阈值前为相对定位，之后为固定定位。也就是说sticky会让元素在页面滚动时如同在正常流中（relative定位效果），但当滚动到特定位置时就会固定在屏幕上如同 fixed ，这个特定位置就是指定 的top, right, bottom 或 left 四个阈值其中之一。</p>
+<p>拿上面的demo做个改造，具体代码如下:</p>
+<p><strong>HTML:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;wrap&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;fixedTop&quot;&gt;我是吸顶&lt;/div&gt;</span><br><span class="line">  &lt;div class=&quot;content&quot;&gt;我是正文&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>CSS:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">body &#123;</span><br><span class="line">  margin: 0;</span><br><span class="line">  padding: 0;</span><br><span class="line">&#125;</span><br><span class="line">.wrap .fixedTop &#123;</span><br><span class="line">  width: 100%;</span><br><span class="line">  position: sticky;</span><br><span class="line">  top: 0;</span><br><span class="line">  background: skyblue;</span><br><span class="line">  color: #fff;</span><br><span class="line">  height: 60px;</span><br><span class="line">  line-height: 60px;</span><br><span class="line">  text-align: center;</span><br><span class="line">&#125;</span><br><span class="line">.content &#123;</span><br><span class="line">  width: 100%;</span><br><span class="line">  height: 1000px;</span><br><span class="line">  text-align: center;</span><br><span class="line">  background: pink;</span><br><span class="line">  color: #fff;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>页面效果</strong></p>
+<div align="center">
+  <img width="300" height="450" src="/img/fixed_demo1.png" alt="sticky实现吸顶导航栏">
+</div>
+
+<h3 id="Sticky注意事项"><a href="#Sticky注意事项" class="headerlink" title="Sticky注意事项"></a><strong>Sticky注意事项</strong></h3><p>通过上面的代码和效果，我们能看的出来，<code>position: sticky</code>属性能够用相对较少的代码，实现<code>position: fixed</code>吸顶导航栏效果。但是需要注意的是，sticky属性还是有以下几个坑的。</p>
+<p><strong>兼容性</strong></p>
+<p>作为一个新的CSS3属性，各大内核对其的支持情况如下图:</p>
+<div align="center">
+  <img width="500" height="200" src="/img/compatible.png" alt="sticky兼容性显示">
+</div>
+
+<p>可以看出，再各大浏览器上，兼容情况还是不错的，但是在Android系统中，不是特别理想，所以移动端的项目，还是尽量不要使用sticky定位了。</p>
+<p><strong>定位值</strong></p>
+<p>和其他较于其他的定位属性一样，sticky在使用的时候，也需要给出定位位置属性，但是区别在于，sticky只用top、right、bottom、left中的任何一个就可以。如果不设置，则只会处于相对定位。</p>
+<p><strong>局限性</strong></p>
+<p>大家都知道,fixed定位是相对于整个页面生效的，而sticky定位只是相对于其父元素定位。同时，父元素必须是可见的，并且父元素没有设置<code>overflow: hidden</code>属性。</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a><strong>结语</strong></h2><p>以上就是本人关于<code>position: sticky</code>的一点理解了，到此本文结束，如果还有什么疑问或者建议，可以多多交流，原创文章，文笔有限，才疏学浅，文中若有不正之处，万望告知。</p>
+<hr>
+
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/img/reward_wx_pay.png"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">您的赞赏将用于博主的一日三餐</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © zsLiu
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+        <a href="/2019/05/06/前端工程师自检清单/" class="next-post btn btn-default" title='一名【合格】前端工程师的自检清单'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">一名【合格】前端工程师的自检清单</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	
+    <div id="vcomments" class="valine"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/assets/valine.min.js"></script>
+
+    <script>
+        new Valine({
+            av: AV,
+            el: '#vcomments',
+            appId: 'xOKV9J4UeQAtVkvnJC7Kq2Jn-gzGzoHsz',
+            appKey: 'erIpQac4azoCmgfBB7Dl9maa',
+            placeholder: '说点什么吧',
+            notify: false,
+            verify: true,
+            avatar: 'mm',
+            meta: 'nick,mail'.split(','),
+            pageSize: '10',
+            path: window.location.pathname,
+            lang: 'zh-CN'.toLowerCase()
+        })
+    </script>
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#开篇"><span class="toc-text">开篇</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Old-Method"><span class="toc-text">Old Method</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Fixed定位实现"><span class="toc-text">Fixed定位实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#问题"><span class="toc-text">问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#优化Fixed定位"><span class="toc-text">优化Fixed定位</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fiexed定位总结"><span class="toc-text">Fiexed定位总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#New-Method"><span class="toc-text">New Method</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Sticky定位实现"><span class="toc-text">Sticky定位实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sticky注意事项"><span class="toc-text">Sticky注意事项</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结语"><span class="toc-text">结语</span></a></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2017
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>
