@@ -1,0 +1,359 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="箱__zsLiu">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://lzs15712826526.github.io">
+    <!--SEO-->
+
+    <meta name="keywords" content="HTML 标签 注释 汉语拼音">
+
+
+    <meta name="description" content="开篇前不久在知乎(真的不是上班摸鱼)上看到了一篇很有意思的文章，里面介绍的就是在html上显示拼音，感觉很有意思，赶紧自己试了一下顺便记录下来了，毕竟要养成爱学习、爱记录的好习惯。
+标签HTML...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+
+    <!--Title-->
+
+
+<title>如何给页面中汉字加上拼音 | 箱__zsLiu</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="箱__zsLiu" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header"  style="background-image:url(http://snippet.shenliyang.com/img/banner.jpg)"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='zsLiu'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 一念星辰，一念大海。 </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://lzs15712826526.github.io">箱__zsLiu</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>主页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/前端/"><i class="fa "></i>技术</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/后端/"><i class="fa "></i>随笔</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="如何给页面中汉字加上拼音">
+            
+	            如何给页面中汉字加上拼音
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/技术/">技术</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/HTML-标签-注释-汉语拼音/">HTML 标签 注释 汉语拼音</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/07/09</span>
+        </span>
+        
+    
+</div>
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h2 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a><strong>开篇</strong></h2><p>前不久在知乎(真的不是上班摸鱼)上看到了一篇很有意思的<a href="https://zhuanlan.zhihu.com/p/66078979" target="_blank" rel="noopener">文章</a>，里面介绍的就是在html上显示拼音，感觉很有意思，赶紧自己试了一下顺便记录下来了，毕竟要养成爱学习、爱记录的好习惯。</p>
+<h3 id="标签"><a href="#标签" class="headerlink" title="标签"></a><strong><ruby>标签</ruby></strong></h3><p>HTML <ruby> 元素 被用来展示东亚文字注音或字符注释。—–<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/ruby" target="_blank" rel="noopener">MDN地址</a></ruby></p>
+<p>很简单的的一个元素，主要用来给文字增加注释或者注音，下面我们来具体看下实现的代码和效果吧。</p>
+<h3 id="Code-amp-amp-Effect"><a href="#Code-amp-amp-Effect" class="headerlink" title="Code &amp;&amp; Effect"></a><strong>Code &amp;&amp; Effect</strong></h3><p><strong>Code:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;wrap&quot;&gt;</span><br><span class="line">  &lt;ruby&gt;</span><br><span class="line">    我是神奇的带拼音中国字</span><br><span class="line">    &lt;rt&gt;woshishenqidedaipinyinzhongguozi&lt;/rt&gt;</span><br><span class="line">  &lt;/ruby&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Effect</strong></p>
+<div align="center">
+  <img width="480" height="240" src="/img/ruby1.png" alt="带拼音注释的汉字">
+</div>
+
+<p>看到这里，效果还是阔以的哈，但是总感觉哪里怪怪的。仔细看一下，卧槽，拼音和汉字竟然没有对齐。作为一个合格(强迫症)的前端，这怎么能忍呢。要想实现对齐，只能放出大招了—–终极粗暴法，一字一拼。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;wrap&quot;&gt;</span><br><span class="line">  &lt;ruby&gt;我&lt;rt&gt;wo&lt;/rt&gt;&lt;/ruby&gt;</span><br><span class="line">  &lt;ruby&gt;是&lt;rt&gt;shi&lt;/rt&gt;&lt;/ruby&gt;</span><br><span class="line">  &lt;ruby&gt;神&lt;rt&gt;shen&lt;/rt&gt;&lt;/ruby&gt;</span><br><span class="line">  &lt;ruby&gt;奇&lt;rt&gt;qi&lt;/rt&gt;&lt;/ruby&gt;</span><br><span class="line">  &lt;ruby&gt;的&lt;rt&gt;de&lt;/rt&gt;&lt;/ruby&gt;</span><br><span class="line">  &lt;ruby&gt;带&lt;rt&gt;dai&lt;/rt&gt;&lt;/ruby&gt;</span><br><span class="line">  &lt;ruby&gt;拼&lt;rt&gt;pin&lt;/rt&gt;&lt;/ruby&gt;</span><br><span class="line">  &lt;ruby&gt;音&lt;rt&gt;yin&lt;/rt&gt;&lt;/ruby&gt;</span><br><span class="line">  &lt;ruby&gt;中&lt;rt&gt;zhong&lt;/rt&gt;&lt;/ruby&gt;</span><br><span class="line">  &lt;ruby&gt;国&lt;rt&gt;guo&lt;/rt&gt;&lt;/ruby&gt;</span><br><span class="line">  &lt;ruby&gt;字&lt;rt&gt;zi&lt;/rt&gt;&lt;/ruby&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<div align="center">
+  <img width="480" height="240" src="/img/ruby2.png" alt="带拼音注释的汉字">
+</div>
+
+<p>哈哈哈，这下就舒服多了吧。做到这里，博主兴冲冲的拿去给同是前端的朋友<ruby>炫<rt>zhuang</rt></ruby><ruby>耀<rt>bi</rt></ruby>，结果惨遭鄙视了。</p>
+<div align="center">
+  <img width="480" height="240" src="/img/ruby3.png" alt="带拼音注释的汉字">
+</div>
+
+<p>话已经放出去了，但是这个音标声调怎么搞呢。我又去仔细阅读了一下知乎上的<a href="https://zhuanlan.zhihu.com/p/66078979" target="_blank" rel="noopener">文章</a>，不得不佩服大佬就是大佬哈，还真的可以做到。不过这个音标声调就不是技术方面的了，而是输入法的功能，以下是搜狗输入法添加音标的过程。</p>
+<div align="center">
+  <img width="480" height="240" src="/img/ruby4.png" alt="带拼音注释的汉字">
+</div>
+
+<p>打开搜狗输入法的软键盘</p>
+<div align="center">
+  <img width="480" height="240" src="/img/ruby5.png" alt="带拼音注释的汉字">
+</div>
+
+<p>点击右上角键盘icon，然后选择拼音字母，就可以输入带声调的拼音啦:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;wrap&quot;&gt;</span><br><span class="line">  &lt;ruby&gt;换&lt;rt&gt;huàn&lt;/rt&gt;&lt;/ruby&gt;</span><br><span class="line">  &lt;ruby&gt;个&lt;rt&gt;gè&lt;/rt&gt;&lt;/ruby&gt;</span><br><span class="line">  &lt;ruby&gt;短&lt;rt&gt;duǎn&lt;/rt&gt;&lt;/ruby&gt;</span><br><span class="line">  &lt;ruby&gt;点&lt;rt&gt;diǎn&lt;/rt&gt;&lt;/ruby&gt;</span><br><span class="line">  &lt;ruby&gt;的&lt;rt&gt;dē&lt;/rt&gt;&lt;/ruby&gt;</span><br><span class="line">  &lt;ruby&gt;文&lt;rt&gt;wén&lt;/rt&gt;&lt;/ruby&gt;</span><br><span class="line">  &lt;ruby&gt;案&lt;rt&gt;àn&lt;/rt&gt;&lt;/ruby&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>效果如下：</p>
+<div align="center">
+  <img width="480" height="240" src="/img/ruby6.png" alt="带拼音注释的汉字">
+</div>
+
+<p>到此，带拼音的汉字算是完美实现了，哈哈哈，大家快学习一下，拿去<ruby>炫<rt>zhuāng</rt></ruby><ruby>耀<rt>bī</rt></ruby>吧。</p>
+<div align="center">
+  <img width="480" height="240" src="/img/ruby7.png" alt="带拼音注释的汉字">
+</div>
+
+
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a><strong>结语</strong></h2><p>以上就是本人关于如何使用<code>&lt;ruby/&gt;</code>标签实现带拼音的汉字的一点理解了。我还试了下，不只是汉语，日语等其他也是可以加的，包括markdown语法也是支持<code>&lt;ruby/&gt;</code>标签的，就像本文里面的一样。到此本文结束，如果还有什么疑问或者建议，可以多多交流，原创文章，文笔有限，才疏学浅，文中若有不正之处，万望告知。</p>
+<hr>
+
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/img/reward_wx_pay.png"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">您的赞赏将用于博主的一日三餐</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © zsLiu
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+        <a href="/2019/05/08/便捷的吸顶/" class="next-post btn btn-default" title='优雅快速的实现吸顶栏导航栏效果'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">优雅快速的实现吸顶栏导航栏效果</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	
+    <div id="vcomments" class="valine"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/assets/valine.min.js"></script>
+
+    <script>
+        new Valine({
+            av: AV,
+            el: '#vcomments',
+            appId: 'xOKV9J4UeQAtVkvnJC7Kq2Jn-gzGzoHsz',
+            appKey: 'erIpQac4azoCmgfBB7Dl9maa',
+            placeholder: '说点什么吧',
+            notify: false,
+            verify: true,
+            avatar: 'mm',
+            meta: 'nick,mail'.split(','),
+            pageSize: '10',
+            path: window.location.pathname,
+            lang: 'zh-CN'.toLowerCase()
+        })
+    </script>
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#开篇"><span class="toc-text">开篇</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#标签"><span class="toc-text">标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code-amp-amp-Effect"><span class="toc-text">Code &amp;&amp; Effect</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结语"><span class="toc-text">结语</span></a></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2017
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>
