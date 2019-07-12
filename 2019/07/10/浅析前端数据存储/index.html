@@ -1,0 +1,392 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="箱__zsLiu">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://lzs15712826526.github.io">
+    <!--SEO-->
+
+    <meta name="keywords" content="前端 数据存储 缓存">
+
+
+    <meta name="description" content="开篇在日常开发中，前端多多少少会遇到数据存储的问题，这篇文章就简单介绍下目前前端可以进行数据存储的三种方法。Cookie、Storage以及IndexedDB。
+简单对比一般来说，前端需要存储的...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+
+    <!--Title-->
+
+
+<title>浅析前端数据存储(cookie、storage、indexedDB)[非原创] | 箱__zsLiu</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="箱__zsLiu" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header"  style="background-image:url(http://snippet.shenliyang.com/img/banner.jpg)"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='zsLiu'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 一念星辰，一念大海。 </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://lzs15712826526.github.io">箱__zsLiu</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>主页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>技术</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/life/"><i class="fa "></i>随笔</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="浅析前端数据存储(cookie、storage、indexedDB)[非原创]">
+            
+	            浅析前端数据存储(cookie、storage、indexedDB)[非原创]
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/技术/">技术</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/前端-数据存储-缓存/">前端 数据存储 缓存</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/07/10</span>
+        </span>
+        
+    
+</div>
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h2 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a><strong>开篇</strong></h2><p>在日常开发中，前端多多少少会遇到数据存储的问题，这篇文章就简单介绍下目前前端可以进行数据存储的三种方法。Cookie、Storage以及IndexedDB。</p>
+<h3 id="简单对比"><a href="#简单对比" class="headerlink" title="简单对比"></a><strong>简单对比</strong></h3><p>一般来说，前端需要存储的数据，可能是从服务端通过ajax请求获取到的数据，也可能是全局需要多次使用的数据。</p>
+<ol>
+<li>cookie: 4K大小 ，可以手动设置失效日期。</li>
+<li>localStorage: 5M大小，除非手动清除，否则一直存在。</li>
+<li>sessionStorage: 5M大小，不可以跨标签访问，页面关闭时销毁。</li>
+<li>indexedDb： 浏览器端数据库，无限制大小，除非手动清除，否则一直存在。</li>
+<li>Web SOL：关系数据库，通过SOL语句访问，需要了解SOL知识，目前已经被抛弃。</li>
+</ol>
+<p>本篇文章只涉及前四个前端部分，Web SOL如有需要，可自行了解。</p>
+<h3 id="一、Cookie"><a href="#一、Cookie" class="headerlink" title="一、Cookie"></a><strong>一、Cookie</strong></h3><p>Cookie主要应用于会话(用户与客户端的交互)，用来跟踪用户的整个会话。包括两种机制，一种是cookie机制，另一种是session机制。简单来说，cookie机制是通过在客户端记录信息来确定用户身份，而session是在服务端记录信息来确定用户身份。</p>
+<h3 id="cookie机制"><a href="#cookie机制" class="headerlink" title="cookie机制"></a><em>cookie机制</em></h3><p>一个用户的所有请求操作都属于同一个会话，而另一个用户的所有请求操作则属于另一个会话。<br>由于HTTP协议是无状态的协议，一旦数据交换完毕，客户端与服务端的连接就会关闭，再次交换数据就需要重新建立新的连接。这就意味着服务器无法从连接上跟踪会话。<br>cookie实际上是一小段的文本信息，客户端请求服务器，如果服务器需要记录该用户状态，就使用response向客户端浏览器颁发一个Cookie，客户端浏览器会把Cookie保存起来。当浏览器再次请求改网站时，浏览器就把请求的网站连同该cookie一同提交给服务器。服务器检查该Cookie，以此来辨认该用户状态。同时，服务端还可以根据需要修改Cookie的内容。<br>Cookie的主要内容包含： 名字(key),值(value),过期时间,路径,域。路径和域一起构成cookie的作用范围。</p>
+<h3 id="session机制"><a href="#session机制" class="headerlink" title="session机制"></a><em>session机制</em></h3><p>session是另一种记录客户状态的机制，不同的是cookie保存在客户端浏览器中，而session保存在服务器上。客户端浏览器访问服务器的时候，服务器把客户信息以某种形式记录在服务器上。这就是session。客户端浏览器再次访问服务器时，只需要从该session中查找 该客户状态就可以了。<br>如果说cookie机制是通过检查用户身上的“通行证”来确定用户身份的话，session机制就是通过检查服务器上的“客户明细表”来确认用户身份的。session相当于程序在服务器上建立的一份用户档案，用户来访的时候只需要查询用户档案表就可以了。</p>
+<p>当程序需要为某个客户端的请求创建一个session时，流程如下：</p>
+<ul>
+<li>服务器首先检查这个客户端的请求里是否已包含了一个session标识—-一般称为sessionId。</li>
+<li>如果已包含这说明以前已经为此客户端创建过session，服务器就按照sessionId把这个session检索出来使用。</li>
+<li>如果客户端请求不包含sessionId，则服务器会为此客户端创建一个session并且生成一个与此session相关联的sessionI。sessionId的值应该是一个既不会重复，又不容易被找到规律以仿造的字符串，这个sessionId将在本次响应中返回给客户端保存。</li>
+</ul>
+<p>我们可以用document.cookie获取cookie，得到的是一个字符串，形如 key1=value1;key2=value2，需要用正则匹配需要的值。</p>
+<p>cookie可以设置路径path，所以他比其他两个多了一层访问限制。<br>cookie可以通过设置domain属性，可以不同二级域名下共享cookie，而Storage不可以。例如<code>http://image.baidu.com</code>的cookie<code>http://map.baidu.com</code>是可以访问的，前提是cookie的domain属性设置为<code>.http://baidu.com</code>，而Storage是不可以的。</p>
+<p>缺点：在请求头上带着数据，大小是4K以内，主Domain污染。</p>
+<p>cookie常用的配置属性有以下几个：</p>
+<p>Expires: cookie最长有效期。</p>
+<p>Max-Age: 在cookie失效之前需要经过的秒数。(当Expires和Max-Age同时存在时，文档给出的是以Max-Age为准，科三我自己用Chrome实验的记过是取二者中最长有效期的值。)<br>Domain： 指定cookie可以送达的主机名。<br>Path： 指定一个URL路径，这个路径必须出现在要请求的资源的路径中才可以发送cookie首部。<br>Secure： 一个带有安全属性的cookie只有在请求使用SSL和HTTPS协议的时候才会被发送到服务器。<br>HttpOnly：设置了HttpOnly属性的cookie不能使用JavaScript经由Document.cookie属性、XNMLHttpRequest和Request APIs进行访问，以防跨站脚本攻击(XSS)。</p>
+<h3 id="二、Storage：localStorage、sessionStorage"><a href="#二、Storage：localStorage、sessionStorage" class="headerlink" title="二、Storage：localStorage、sessionStorage"></a><strong>二、Storage：localStorage、sessionStorage</strong></h3><p>大小：官方建议5M存储空间。<br>类型：只能操作字符串，在存储之前应该使用JSON.stringify()方法先进行一步安全转换字符串，取值时再用JSON.parse()方法再转换一次。<br>存储的内容：数组，图片，json，样式，脚本。。。(只要是能序列化成字符串的内容都可以存储)。<br>注意：数据是<strong>明文存储</strong>，毫无隐私性可言，<strong>绝对不能用于存储重要信息</strong><br>区别：sessionStorage将数据临时存储在session中，浏览器关闭，数据随之消失，localStorage将数据存储在本地，理论上说数据永远不会消失，除非人为删除。</p>
+<p>另外，不同浏览器无法共享localStorage和sessionStorage中的信息。统一浏览器的相同域名和端口的不同页面间可以共享相同的localStorage，但是不同页面间无法共享sessionStorage的信息。</p>
+<h4 id="1、基础操作API"><a href="#1、基础操作API" class="headerlink" title="1、基础操作API"></a><strong>1、基础操作API</strong></h4><p><strong>保存数据</strong></p>
+<p><code>localStorage.setItem(key, value);</code><br><code>sessionStorage.setItem(key, value);</code></p>
+<p><strong>读取数据</strong></p>
+<p><code>localStorage.getItem(key);</code><br><code>sessionStorage.getItem(key);</code></p>
+<p><strong>删除单个数据</strong></p>
+<p><code>localStorage.removeItem(key);</code><br><code>sessionStorage.removeItem(key);</code></p>
+<p><strong>删除全部数据</strong></p>
+<p><code>localStorage.clear();</code><br><code>sessionStorage.clear();</code></p>
+<p><strong>获取索引的key</strong></p>
+<p><code>localStorage.key(index);</code><br><code>sessionStorage.key(index);</code></p>
+<h4 id="2、监听storage事件"><a href="#2、监听storage事件" class="headerlink" title="2、监听storage事件"></a><strong>2、监听storage事件</strong></h4><p>可以通过监听window对象的storage事件并指定其事件处理函数，当页面中对localStorage或者sessionStorage进行修改时，则会触发对应的处理函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">window.addEventListener(&apos;storage&apos;, function(e)&#123;</span><br><span class="line">  console.log(`key=$&#123;e.key&#125;oldValue=$&#123;e.oldValue&#125;newValue=$&#123;e.newValue&#125;`);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>触发事件的事件对象(e参数)有以下几个属性：<br>key: storage的键值。<br>oldValue: storage修改前的值。<br>newValue: storgae修改后的值。<br>url: 页面url。<br>storageArea：被修改的storage对象。</p>
+<h3 id="三、indexedDB"><a href="#三、indexedDB" class="headerlink" title="三、indexedDB"></a><strong>三、indexedDB</strong></h3><p>本文只对indexedDB做简单流程介绍，如果想要系统的学习，可以去<a href="https://developer.mozilla.org/zh-CN/docs/Glossary/IndexedDB" target="_blank" rel="noopener">MDN文档</a>啃API，或者参考<a href="https://www.zhangxinxu.com/wordpress/2017/07/html5-indexeddb-js-example/" target="_blank" rel="noopener">张大神的indexedDB教程</a>。</p>
+<h4 id="1、打开数据库"><a href="#1、打开数据库" class="headerlink" title="1、打开数据库"></a><strong>1、打开数据库</strong></h4><p><code>var DBOpenRequest = window.indexedDB.open(dbName, version);</code><br>dbName是数据库名称，version是数据库版本。<br>打开数据库时，可能触发4种事件：</p>
+<ul>
+<li>success：打开成功。</li>
+<li>error：打开失败。</li>
+<li>upgradeneeded: 第一次打开该数据库，或者数据库版本发生变化。</li>
+<li>blocked：上一次的数据库连接还未关闭。<br>第一次打开数据库时，会先触发upgradeneeded事件，然后触发success事件。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">var openRequest = indexedDB.open(&quot;test&quot; ,1);</span><br><span class="line">var db;</span><br><span class="line"></span><br><span class="line">openRequest.onupgradeneeded = function(e) &#123;</span><br><span class="line">  console.log(&apos;upgradeneeded&apos;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">openRequest.onsuccess = function(e) &#123;</span><br><span class="line">  console.log(&apos;success&apos;);</span><br><span class="line">  db = e.target.result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">openRequest.onerror = function(e) &#123;</span><br><span class="line">  console.log(&apos;error&apos;);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>open返回的是一个对象。<br>回调函数定义在这个对象上面。<br>回调函数接受一个事件对象event作为参数，它的target.result属性就指向打开的indexedDB数据库，也就是说 <code>db = e.target.result</code>才算我们真正拿到的数据库。</p>
+<h4 id="2、创建一个数据库存储对象"><a href="#2、创建一个数据库存储对象" class="headerlink" title="2、创建一个数据库存储对象"></a><strong>2、创建一个数据库存储对象</strong></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var objectStore = db.creatObjectStore(dbName, &#123;</span><br><span class="line">  keyPath: &apos;id&apos;,</span><br><span class="line">  autoIncrement: true,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>objectStore是一个重要的对象，可以理解为存储对象<br>objectStore.add()可以向数据库添加数据，objectStore.delete()可以删除数据，objectStore.clear()可以清空数据库，objectStore.put()可以替换数据</p>
+<p>使用objectStore来创建数据库的主键和普通字段</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">objectStore.createIndex(&apos;id&apos;, &apos;id&apos;, &#123;</span><br><span class="line">  unique: true,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="3、向indexedDB数据库添加数据"><a href="#3、向indexedDB数据库添加数据" class="headerlink" title="3、向indexedDB数据库添加数据"></a><strong>3、向indexedDB数据库添加数据</strong></h4><p>数据库的操作都是基于事务(transaction)来进行，于是，无论是添加编辑还是删除数据库，我们都要先建立一个事务，然后才能继续下面的操作。<br><code>var transaction = db.transaction(dbName, &quot;readwrite&quot;);</code><br>dbName就是数据库的名称。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 新建一个事务</span><br><span class="line">var transaction = db.transaction(&apos;project&apos;, &quot;readwrite&quot;);</span><br><span class="line">// 打开存储对象</span><br><span class="line">var objectStore = transaction.objectStore(&apos;project&apos;);</span><br><span class="line">// 添加到数据对象中</span><br><span class="line">objectStore.add(newItem);</span><br></pre></td></tr></table></figure>
+
+<h4 id="4、indexedDB数据库的获取"><a href="#4、indexedDB数据库的获取" class="headerlink" title="4、indexedDB数据库的获取"></a><strong>4、indexedDB数据库的获取</strong></h4><p>indexedDB数据库的获取使用<code>Cursor APIs</code>和<code>Key Range APIs</code>。也就是使用“游标API”和“范围API”，具体使用可以去看文档。</p>
+<h3 id="四、对比"><a href="#四、对比" class="headerlink" title="四、对比"></a><strong>四、对比</strong></h3><p>如果是浏览器主窗体线程开发，同时存储数据结构简单，localStorage比较好；<br>如果数据结构比较复杂，同时对浏览器的兼容性没什么要求，可以考虑使用indexedDB；<br>如果是在Service Workers中开发使用，只能使用indexedDB数据存储。<br>indexedDB数据库的使用目前可以直接在http协议下使用，这个和cacheStorage缓存存储必须使用https协议不一样。<br>cacheStorage缓存页面，indexedDB数据库缓存数据，两者结合就可以实现百分百的离线开发。</p>
+<p><strong>localStorage、sessionStorage和cookie的区别</strong></p>
+<p>共同点：都是保存在浏览器端、且同源的。<br>区别：</p>
+<ul>
+<li><p>cookie数据始终在同源的http请求中携带(即使不需要)，即cookie在浏览器和服务器件来回传递，而sessionStorage和localStorage不会自动把数据发送给服务器，仅在本地保存。cookie数据还有路径(path)的概念，可以限制cookie只属于某个路径下。</p>
+</li>
+<li><p>存储大小限制也不同，cookie数据不能超过4k，同时因为每次http请求都会携带cookie，所以cookie只适合保存很小的数据，比如会话标识。sessionStorage和localStorage虽然也有存储大小限制，但比cookie大得多，可以达到5M或者更大。</p>
+</li>
+<li><p>数据有效期不同，sessionStorage：仅在当前浏览器窗口关闭之前有效；localStorage：始终有效，窗口或者浏览器关闭也一直保存，因此用作持久数据；cookie：只在设置的cookie过期时间之前有效，即使窗口关闭或者浏览器关闭。</p>
+</li>
+<li><p>作用域不同，sessionStorage：不在不同的浏览器窗口中共享，即使是同一个页面；localStorage在所有同源的窗口中都是共享的；cookie也是在所有同源窗口中都是共享的。</p>
+</li>
+<li><p>web Storage支持事件通知机制，可以将数据更新的通知发送给监听者。</p>
+</li>
+<li><p>web Storage的api接口使用更方便。</p>
+</li>
+</ul>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a><strong>结语</strong></h2><p>本文非博主原创，原文地址<a href="https://github.com/amandakelake/blog/issues/13" target="_blank" rel="noopener">https://github.com/amandakelake/blog/issues/13</a>。</p>
+<p>到此本文结束，如果还有什么疑问或者建议，可以多多交流，原创文章，文笔有限，才疏学浅，文中若有不正之处，万望告知。</p>
+<hr>
+
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/img/123.jpg"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">您的赞赏将用于博主的一日三餐</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © zsLiu
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+        <a href="/2019/07/09/令人眼前一亮的汉语拼音/" class="next-post btn btn-default" title='如何给页面中汉字加上拼音'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">如何给页面中汉字加上拼音</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	
+    <div id="vcomments" class="valine"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/assets/valine.min.js"></script>
+
+    <script>
+        new Valine({
+            av: AV,
+            el: '#vcomments',
+            appId: 'xOKV9J4UeQAtVkvnJC7Kq2Jn-gzGzoHsz',
+            appKey: 'erIpQac4azoCmgfBB7Dl9maa',
+            placeholder: '说点什么吧',
+            notify: false,
+            verify: true,
+            avatar: 'mm',
+            meta: 'nick,mail'.split(','),
+            pageSize: '10',
+            path: window.location.pathname,
+            lang: 'zh-CN'.toLowerCase()
+        })
+    </script>
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#开篇"><span class="toc-text">开篇</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#简单对比"><span class="toc-text">简单对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一、Cookie"><span class="toc-text">一、Cookie</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cookie机制"><span class="toc-text">cookie机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#session机制"><span class="toc-text">session机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、Storage：localStorage、sessionStorage"><span class="toc-text">二、Storage：localStorage、sessionStorage</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1、基础操作API"><span class="toc-text">1、基础操作API</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2、监听storage事件"><span class="toc-text">2、监听storage事件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、indexedDB"><span class="toc-text">三、indexedDB</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1、打开数据库"><span class="toc-text">1、打开数据库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2、创建一个数据库存储对象"><span class="toc-text">2、创建一个数据库存储对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3、向indexedDB数据库添加数据"><span class="toc-text">3、向indexedDB数据库添加数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4、indexedDB数据库的获取"><span class="toc-text">4、indexedDB数据库的获取</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、对比"><span class="toc-text">四、对比</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结语"><span class="toc-text">结语</span></a></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2017
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>
